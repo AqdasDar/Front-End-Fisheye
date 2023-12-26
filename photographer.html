@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html>
+<html lang="fr">
   <head>
     <link href="css/style.css" rel="stylesheet" type="text/css" />
     <meta charset="utf-8">
@@ -9,25 +9,43 @@
   </head>
   <body>
     <header>
-      <img src="assets/images/logo.png" class="logo" />
+        <a aria-label="Retour à la page d’accueil" href="index.html">
+            <img alt="fisheye logo" aria-label="fisheye logo" class="logo" src="assets/images/logo.png"/>
+        </a>
     </header>
     <main id="main">
       <div class="photograph-header">
-        <button class="contact_button" onclick="displayModal()">Contactez-moi</button>
+          <button aria-label="contactez-moi" class="contact_button" onclick="displayModal()">Contactez-moi</button>
       </div>
+        <!-- tri pour photos -->
+        <div class="tri">
+            <label for="sort">Trier par</label>
+            <div aria-label="trier par" class="sort_button" id="sort" role="listbox">
+                <span class="option">Popularité<img alt="arrow" aria-label="flèche"
+                                                    src="assets/icons/arrow.svg"/></span>
+                <div class="options">
+                    <button aria-selected="true" role="option">Popularité</button>
+                    <button role="option">Date</button>
+                    <button role="option">Titre</button>
+                </div>
+            </div>
+        </div>
+        <div class="photographer_section">
+        </div>
     </main>
     <div id="contact_modal">
 			<div class="modal">
 				<header>
           <h2>Contactez-moi</h2>
-          <img src="assets/icons/close.svg" onclick="closeModal()" />
+                    <img alt="close modal" aria-label="fermer la fenêtre de contact" onclick="closeModal()"
+                         src="assets/icons/close.svg"/>
         </header>
 				<form>
 					<div>
 						<label>Prénom</label>
 						<input />
 					</div>
-          <button class="contact_button">Envoyer</button>
+                    <button aria-label="contactez-moi" class="contact_button">Envoyer</button>
 				</form>
 			</div>
 		</div>

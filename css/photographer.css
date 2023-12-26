@@ -6,8 +6,52 @@
     background-color: #FAFAFA;
     height: 300px;
     margin: 0 100px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
 }
 
+.photographer_profile {
+    margin-left: 50px;
+    display: flex;
+    flex-direction: column;
+}
+
+.photographer_name {
+    color: #D3573C;
+    font-family: DM Sans;
+    font-size: 64px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: normal;
+}
+
+.photographer_location {
+    color: #901C1C;
+    font-family: DM Sans;
+    font-size: 24px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: normal;
+}
+
+.photographer_tagline {
+    color: #525252;
+    font-family: DM Sans;
+    font-size: 18px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: normal;
+}
+
+.photographer_img {
+    height: 200px;
+    width: 200px;
+    border-radius: 50%;
+    object-fit: cover;
+    margin: 20px 50px 0 0;
+}
 .contact_button {
     font-size: 20px;
     font-weight: bold;
@@ -19,6 +63,8 @@
     background-color: #901C1C;
     border-radius: 5px;
     cursor: pointer;
+    position: absolute;
+    left: 45%;
 }
 
 .modal {
@@ -73,4 +119,95 @@ form input {
     height: 68px;
     border: none;
     border-radius: 5px;
+}
+
+/* Style the container */
+.sort_button {
+    margin-left: 25px;
+    width: 170px;
+    height: 69px;
+    border-radius: 5px;
+    background: #901C1C;
+    position: relative;
+    display: inline-block;
+    cursor: pointer;
+}
+
+/* Style the span */
+.sort_button span {
+    display: flex;
+    align-items: center;
+    height: 100%;
+    color: #FFF;
+    font-family: DM Sans;
+    font-size: 18px;
+    font-style: normal;
+    font-weight: 700;
+    line-height: normal;
+    padding: 0 20px;
+}
+
+/* Style the options */
+.sort_button .options {
+    display: none;
+    position: absolute;
+    top: 100%;
+    left: 0;
+    width: 100%;
+    background-color: #901C1C;
+    border-bottom-left-radius: 5px;
+    border-bottom-right-radius: 5px;
+}
+
+/* Style the buttons */
+.sort_button .options button {
+    background: none;
+    border: none;
+    padding: 5px 20px;
+    width: 100%;
+    text-align: left;
+    color: #FFF;
+    font-family: DM Sans;
+    font-size: 18px;
+    font-style: normal;
+    font-weight: 700;
+    line-height: normal;
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+}
+
+.sort_button .options button:last-child {
+    border-bottom: none;
+}
+
+
+/* Hide the selected option from the dropdown */
+.sort_button .options button[aria-selected="true"] {
+    display: none;
+}
+
+.tri {
+    margin: 10px 100px;
+}
+
+.media_gallery {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    grid-gap: 95px;
+    margin: 0 100px;
+}
+
+.media_img {
+    width: 350px;
+    height: 300px;
+}
+
+.media_title {
+    color: #901C1C;
+    font-family: DM Sans;
+    font-size: 24px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: normal;
 }
