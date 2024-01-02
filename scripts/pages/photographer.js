@@ -3,22 +3,39 @@ async function getPhotographers() {
     return await response.json();
 }
 
-const photographersSection = document.querySelector(".photograph-header");
-
-const button = document.querySelector(".contact_button");
-
-
-let params = new URL(document.location).searchParams;
-let id = Number(params.get("id")); // Convert the id to a number
-console.log(id);
 
 getPhotographers().then((data) => {
-    const photographers = data.photographers;
+    const photographersSection = document.querySelector(".photograph-header");
+
+    const button = document.querySelector(".contact_button");
+
+    let params = new URL(document.location).searchParams;
+    let id = Number(params.get("id")); // Convert the id to a number
+//console.log(id);
+    const media = data.media;
+//console.log(media);
+    const mediaSection = document.querySelector(".photographer_section");
+    const mediaGallery = document.createElement('div');
+    const mediaPhotographer = media.filter((media) => media["photographerId"] === id);
+
+//console.log(data);
+
+    const photographers = data["photographers"];
     //console.log(photographers);
     //   console.log(data);
     //find photographer by id
-    const photographer = photographers.find((photographer) => photographer.id === id);
-    //console.log(photographer.name);
+    const defaultPhotographer = {
+        city: "",
+        country: "",
+        id: id,
+        name: "",
+        portrait: "",
+        price: "",
+        tagline: ""
+    };
+
+    const photographer = photographers.find((photographer) => photographer.id === id) || defaultPhotographer;
+    // console.log(photographer);
     const photographerProfile = document.createElement('div');
     photographerProfile.classList.add('photographer_profile');
     let title = document.createElement('h1');
@@ -40,9 +57,8 @@ getPhotographers().then((data) => {
     //photo
     const photographerPhoto = document.createElement('div');
     photographerPhoto.classList.add('photographer_photo');
-    let img = document.createElement('img');
-    img.setAttribute("src", `assets/photographers/Photographers_ID_Photos/${photographer.portrait}`);
-    img.setAttribute("alt", photographer.name);
+    let img = document.createElement('div');
+    img.style.backgroundImage = `url(assets/photographers/Photographers_ID_Photos/${photographer.portrait})`;
     img.classList.add('photographer_img');
     photographerPhoto.appendChild(img);
     photographersSection.appendChild(photographerPhoto);
@@ -61,12 +77,47 @@ getPhotographers().then((data) => {
             this.style.borderBottomLeftRadius = '';
             this.style.borderBottomRightRadius = '';
         }
+
+
     });
 
     const buttons = document.querySelectorAll('.sort_button .options button');
 
+    // sort by popularity
+    // Trier par popularité (nombre de likes)
+    // Sort by popularity
+    const sortByLikes = () => {
+        const sortedMedia = mediaPhotographer.sort((a, b) => b["likes"] - a["likes"]);
+        updateMediaGallery(sortedMedia);
+    };
+
+// Sort by date
+    const sortByDate = () => {
+        const sortedMedia = mediaPhotographer.sort((a, b) => new Date(b.date) - new Date(a.date));
+        updateMediaGallery(sortedMedia);
+    };
+
+// Sort by title
+    const sortByTitle = () => {
+        const sortedMedia = mediaPhotographer.sort((a, b) => a.title.localeCompare(b.title));
+        updateMediaGallery(sortedMedia);
+    };
     buttons.forEach(button => {
         button.addEventListener('click', function () {
+            let sortFunction;
+
+            if (this.name === 'date') {
+                sortFunction = sortByDate;
+            } else if (this.name === 'titre') {
+                sortFunction = sortByTitle;
+            } else {
+                sortFunction = sortByLikes;
+            }
+
+            sortFunction();
+            console.log(sortFunction);
+
+
             // Get the previously selected option
             const previousSelected = document.querySelector('.sort_button .options button[aria-selected="true"]');
 
@@ -91,48 +142,62 @@ getPhotographers().then((data) => {
         });
     });
 
-    //media
-    const media = data.media;
-    //console.log(media);
-    const mediaSection = document.querySelector(".photographer_section");
-    const mediaGallery = document.createElement('div');
-    mediaGallery.classList.add('media_gallery');
-    mediaSection.appendChild(mediaGallery);
-    const mediaPhotographer = media.filter((media) => media.photographerId === id);
-    //console.log(mediaPhotographer);
-    mediaPhotographer.forEach((media) => {
-        const mediaCard = document.createElement('div');
-        mediaCard.classList.add('media_card');
-        mediaGallery.appendChild(mediaCard);
-        if (media.image) {
-            const mediaImage = document.createElement('img');
-            mediaImage.setAttribute("src", `assets/photographers/${photographer.name.split(' ')[0]}/${media.image}`);
-            mediaImage.setAttribute("alt", media.alt);
-            mediaImage.classList.add('media_img');
-            mediaCard.appendChild(mediaImage);
-        } else {
-            const mediaVideo = document.createElement('video');
-            mediaVideo.setAttribute("src", `assets/photographers/${photographer.name.split(' ').join('')}/${media.video}`);
-            mediaVideo.setAttribute("alt", media.alt);
-            mediaVideo.classList.add('media_video');
-            mediaCard.appendChild(mediaVideo);
-        }
-        const mediaTitle = document.createElement('h2');
-        mediaTitle.textContent = media.title;
-        mediaTitle.classList.add('media_title');
-        mediaCard.appendChild(mediaTitle);
-        const mediaLikes = document.createElement('p');
-        mediaLikes.textContent = media.likes;
-        mediaLikes.classList.add('media_likes');
-        mediaCard.appendChild(mediaLikes);
-        const mediaPrice = document.createElement('p');
-        mediaPrice.textContent = media.price + '€';
-        mediaPrice.classList.add('media_price');
-        mediaCard.appendChild(mediaPrice);
-        const mediaHeart = document.createElement('i');
-        mediaHeart.classList.add('fas', 'fa-heart');
-        mediaCard.appendChild(mediaHeart);
-    });
+    function updateMediaGallery(sortedMedia) {
+        mediaGallery.innerHTML = '';
+        sortedMedia.forEach((mediaPhotographer) => {
+                mediaGallery.classList.add('media_gallery');
+                const mediaCard = document.createElement('div');
+                mediaCard.classList.add('media_card');
+                let mediaImg = document.createElement('img');
+                mediaImg.classList.add('media_img');
+                const mediaTitle = document.createElement('h2');
+                mediaTitle.classList.add('media_title');
+                const mediaPrice = document.createElement('p');
+                mediaPrice.classList.add('media_price');
+                const mediaLikes = document.createElement('p');
+                mediaLikes.classList.add('media_likes');
+                const mediaHeart = document.createElement('img');
+                mediaHeart.classList.add('media_heart');
 
+                mediaImg.src = `assets/photographers/${photographer.name.split(' ')[0]}/${mediaPhotographer.image}`;
+                mediaTitle.textContent = mediaPhotographer.title;
+                mediaPrice.textContent = mediaPhotographer.price + '€';
+                mediaLikes.textContent = mediaPhotographer.likes;
+                mediaHeart.src = 'assets/icons/heart.svg';
+                mediaHeart.alt = 'likes';
+                mediaHeart.setAttribute('aria-label', 'likes');
+                // if video
+                if (mediaPhotographer.video) {
+
+                    mediaImg = document.createElement('video');
+                    mediaImg.classList.add('media_video');
+                    mediaImg.src = `assets/photographers/${photographer.name.split(' ')[0]}/${mediaPhotographer.video}`;
+                    mediaImg.setAttribute('controls', '');
+                    mediaImg.setAttribute('type', 'video/mp4');
+                    mediaImg.setAttribute('preload', 'metadata');
+                    mediaImg.setAttribute('alt', mediaPhotographer.title);
+                    mediaImg.setAttribute('aria-label', mediaPhotographer.title);
+                    mediaPhotographer.image = mediaPhotographer.video;
+                }
+                mediaCard.appendChild(mediaImg);
+                mediaCard.appendChild(mediaTitle);
+                mediaCard.appendChild(mediaPrice);
+                mediaCard.appendChild(mediaLikes);
+                mediaCard.appendChild(mediaHeart);
+                mediaGallery.appendChild(mediaCard);
+                mediaSection.appendChild(mediaGallery);
+                if (mediaPhotographer.image) {
+                    mediaImg.src = `assets/photographers/${photographer.name.split(' ')[0]}/${mediaPhotographer.image}`;
+                } else {
+                    // console.error('mediaPhotographer.image is undefined');
+
+                }
+                //   console.log(mediaPhotographer)
+
+            }
+        )
+    }
+
+    updateMediaGallery(mediaPhotographer);
 
 });
