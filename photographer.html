@@ -1,65 +1,75 @@
 <!DOCTYPE html>
 <html lang="fr">
-  <head>
-    <link href="css/style.css" rel="stylesheet" type="text/css" />
+<head>
+    <link href="css/style.css" rel="stylesheet" type="text/css"/>
     <meta charset="utf-8">
-    <link rel="icon" type="image/png" href="assets/favicon.png">
+    <link href="assets/favicon.png" rel="icon" type="image/png">
     <link href="https://fonts.googleapis.com/css?family=DM+Sans&display=swap" rel="stylesheet">
     <title>Fisheye - photographe </title>
-  </head>
-  <body>
-    <header>
-        <a aria-label="Retour à la page d’accueil" href="index.html">
-            <img alt="fisheye logo" aria-label="fisheye logo" class="logo" src="assets/images/logo.png"/>
-        </a>
-    </header>
-    <main id="main">
-      <div class="photograph-header">
-          <button aria-label="contactez-moi" class="contact_button" onclick="displayModal()">Contactez-moi</button>
-      </div>
-        <!-- tri pour photos -->
-        <div class="tri">
-            <label for="sort">Trier par</label>
-            <div aria-label="trier par" class="sort_button" id="sort" role="listbox">
+</head>
+<body>
+<header>
+    <a aria-label="Retour à la page d’accueil" href="index.html">
+        <img alt="fisheye logo" aria-label="fisheye logo" class="logo" src="assets/images/logo.png"/>
+    </a>
+</header>
+<main id="main">
+    <div class="photograph-header">
+        <button aria-label="contactez-moi" class="contact_button" onclick="displayModal()">Contactez-moi</button>
+    </div>
+    <!-- tri pour photos -->
+    <div class="tri">
+        <label for="sort">Trier par</label>
+        <div aria-label="trier par" class="sort_button" id="sort" role="listbox">
                 <span class="option">Popularité<img alt="arrow" aria-label="flèche"
                                                     src="assets/icons/arrow.svg"/></span>
-                <div class="options">
-                    <button aria-selected="true" name="popularite" role="option">Popularité</button>
-                    <button name="date" role="option">Date</button>
-                    <button name="titre" role="option">Titre</button>
-                </div>
+            <div class="options">
+                <button aria-selected="true" name="popularite" role="option">Popularité</button>
+                <button name="date" role="option">Date</button>
+                <button name="titre" role="option">Titre</button>
             </div>
         </div>
-        <div class="photographer_section">
+    </div>
+    <div class="photographer_section">
+    </div>
+    <div class="price_like">
+        <div class="likes_div">
+            <span aria-label="total de likes" class="likes"></span>
+            <img alt="likes" aria-label="likes" src="assets/icons/blackheart.svg"/>
         </div>
-    </main>
-    <div id="contact_modal">
-			<div class="modal">
-				<header>
-          <h2>Contactez-moi</h2>
-                    <h2 id="photographer_name"></h2>
-                    <img alt="close modal" aria-label="fermer la fenêtre de contact" onclick="closeModal()"
-                         src="assets/icons/close.svg"/>
+        <div class="price_div">
+            <span aria-label="Prix par jour" class="price_jour"></span>
+            <span aria-label="euros">€ / jour</span>
+        </div>
+    </div>
+</main>
+<div id="contact_modal">
+    <div class="modal">
+        <header class="modal_header">
+            <h2>Contactez-moi</h2>
+            <img alt="close modal" aria-label="fermer la fenêtre de contact" onclick="closeModal()"
+                 src="assets/icons/close.svg"/>
+            <h2 id="photographer_name"></h2>
         </header>
-                <form action="" id="contact_form" method="post">
-					<div>
-                        <!-- erreur -->
-                        <div id="error_message"></div>
-                        <label for="first_name">Prénom</label>
-                        <input aria-label="prénom" id="first_name" name="first_name" type="text"/>
-                        <label for="last_name">Nom</label>
-                        <input aria-label="nom" id="last_name" name="last_name" type="text"/>
-                        <label for="email">Email</label>
-                        <input aria-label="email" id="email" name="email" type="email"/>
-                        <label for="message">Votre message</label>
-                        <textarea aria-label="message" id="message" name="message"></textarea>
+        <form action="" id="contact_form" method="post">
+            <div>
+                <!-- erreur -->
+                <div id="error_message"></div>
+                <label for="first_name">Prénom</label>
+                <input aria-label="prénom" id="first_name" name="first_name" type="text"/>
+                <label for="last_name">Nom</label>
+                <input aria-label="nom" id="last_name" name="last_name" type="text"/>
+                <label for="email">Email</label>
+                <input aria-label="email" id="email" name="email" type="email"/>
+                <label for="message">Votre message</label>
+                <textarea aria-label="message" id="message" name="message"></textarea>
 
-                    </div>
-                    <button aria-label="contactez-moi" class="contact_button" id="submit_button">Envoyer</button>
-				</form>
-			</div>
-		</div>
-    <script src="/scripts/pages/photographer.js"></script>
-    <script src="/scripts/utils/contactForm.js"></script>
-  </body>
+            </div>
+            <button aria-label="contactez-moi" class="contact_button" id="submit_button">Envoyer</button>
+        </form>
+    </div>
+</div>
+<script src="/scripts/pages/photographer.js"></script>
+<script src="/scripts/utils/contactForm.js"></script>
+</body>
 </html>

@@ -34,6 +34,7 @@ getPhotographers().then((data) => {
         tagline: ""
     };
 
+
     const photographer = photographers.find((photographer) => photographer.id === id) || defaultPhotographer;
     // console.log(photographer);
     const photographerProfile = document.createElement('div');
@@ -65,7 +66,6 @@ getPhotographers().then((data) => {
 
     //Sort
     const sortButton = document.querySelector('.sort_button');
-    const option = document.querySelectorAll('.option');
     const options = document.querySelector('.sort_button .options');
 
     sortButton.addEventListener('click', function () {
@@ -115,7 +115,6 @@ getPhotographers().then((data) => {
             }
 
             sortFunction();
-            console.log(sortFunction);
 
 
             // Get the previously selected option
@@ -148,56 +147,206 @@ getPhotographers().then((data) => {
                 mediaGallery.classList.add('media_gallery');
                 const mediaCard = document.createElement('div');
                 mediaCard.classList.add('media_card');
+                mediaCard.classList.add('modal_button');
                 let mediaImg = document.createElement('img');
                 mediaImg.classList.add('media_img');
+                const mediaHeader = document.createElement('div');
+                mediaHeader.classList.add('media_header');
                 const mediaTitle = document.createElement('h2');
                 mediaTitle.classList.add('media_title');
-                const mediaPrice = document.createElement('p');
-                mediaPrice.classList.add('media_price');
+
+                const mediaLikesContainer = document.createElement('div');
+                mediaLikesContainer.classList.add('media_likes_container');
                 const mediaLikes = document.createElement('p');
                 mediaLikes.classList.add('media_likes');
-                const mediaHeart = document.createElement('img');
+
+                const mediaHeart = document.createElement('a');
+
+                mediaHeart.addEventListener('click', () => {
+                    if (!mediaPhotographer.liked) {
+                        mediaPhotographer.liked = true;
+                        mediaPhotographer["likes"]++;
+                        mediaLikes.textContent = mediaPhotographer["likes"];
+                    } else {
+                        mediaPhotographer.liked = false;
+                        mediaPhotographer["likes"]--;
+                        mediaLikes.textContent = mediaPhotographer["likes"];
+                    }
+                });
+                const mediaHeartImg = document.createElement('img');
+
+                mediaHeartImg.src = 'assets/icons/heart.svg';
+                mediaHeartImg.alt = 'likes';
+                mediaHeart.appendChild(mediaHeartImg);
+                mediaHeart.setAttribute('aria-label', 'likes');
                 mediaHeart.classList.add('media_heart');
 
-                mediaImg.src = `assets/photographers/${photographer.name.split(' ')[0]}/${mediaPhotographer.image}`;
-                mediaTitle.textContent = mediaPhotographer.title;
-                mediaPrice.textContent = mediaPhotographer.price + '€';
-                mediaLikes.textContent = mediaPhotographer.likes;
-                mediaHeart.src = 'assets/icons/heart.svg';
-                mediaHeart.alt = 'likes';
-                mediaHeart.setAttribute('aria-label', 'likes');
-                // if video
                 if (mediaPhotographer.video) {
 
                     mediaImg = document.createElement('video');
                     mediaImg.classList.add('media_video');
                     mediaImg.src = `assets/photographers/${photographer.name.split(' ')[0]}/${mediaPhotographer.video}`;
-                    mediaImg.setAttribute('controls', '');
                     mediaImg.setAttribute('type', 'video/mp4');
                     mediaImg.setAttribute('preload', 'metadata');
                     mediaImg.setAttribute('alt', mediaPhotographer.title);
                     mediaImg.setAttribute('aria-label', mediaPhotographer.title);
                     mediaPhotographer.image = mediaPhotographer.video;
+                } else {
+                    mediaImg.src = `assets/photographers/${photographer.name.split(' ')[0]}/${mediaPhotographer.image}`;
                 }
+                //console.log(mediaImg);
+                mediaTitle.textContent = mediaPhotographer.title;
+                mediaLikes.textContent = mediaPhotographer["likes"];
+                // if video
                 mediaCard.appendChild(mediaImg);
-                mediaCard.appendChild(mediaTitle);
-                mediaCard.appendChild(mediaPrice);
-                mediaCard.appendChild(mediaLikes);
-                mediaCard.appendChild(mediaHeart);
+                mediaCard.appendChild(mediaHeader);
+                mediaHeader.appendChild(mediaTitle);
+                mediaHeader.appendChild(mediaLikesContainer);
+                mediaLikesContainer.appendChild(mediaLikes);
+                mediaLikesContainer.appendChild(mediaHeart);
                 mediaGallery.appendChild(mediaCard);
                 mediaSection.appendChild(mediaGallery);
-                if (mediaPhotographer.image) {
-                    mediaImg.src = `assets/photographers/${photographer.name.split(' ')[0]}/${mediaPhotographer.image}`;
-                } else {
-                    // console.error('mediaPhotographer.image is undefined');
 
-                }
+                addEventListenersToGalleryItems();
+
+                // console.error('mediaPhotographer.image is undefined');
+
+
                 //   console.log(mediaPhotographer)
-
             }
         )
     }
 
+    sortByLikes();
     updateMediaGallery(mediaPhotographer);
+
+    // Modal
+    const modal = document.createElement('div');
+    modal.style.display = 'none';
+    modal.classList.add('modalGallery');
+    document.body.appendChild(modal);
+
+    const modalPrev = document.createElement('a');
+    modalPrev.classList.add('modal_prev');
+    modalPrev.setAttribute('aria-label', 'précédent');
+    const modalPrevImg = document.createElement('img');
+    modalPrevImg.src = 'assets/icons/prev.svg';
+    modalPrevImg.alt = 'prev';
+    modalPrev.appendChild(modalPrevImg);
+    modal.appendChild(modalPrev);
+
+    let ObjectDiv = document.createElement('div');
+    ObjectDiv.classList.add('object_div');
+    modal.appendChild(ObjectDiv);
+
+    let ObjectContainer = document.createElement('div');
+    ObjectContainer.classList.add('object_container');
+    ObjectDiv.appendChild(ObjectContainer);
+    let ObjectModal = document.createElement('object');
+    ObjectContainer.appendChild(ObjectModal);
+
+
+    const modalTitle = document.createElement('h2');
+    modalTitle.classList.add('modal_title');
+    ObjectDiv.appendChild(modalTitle);
+
+
+    let currentIndex = 0; // Ajoutez cette ligne en haut de votre script
+
+    addEventListenersToGalleryItems();
+
+
+    const modalNext = document.createElement('a');
+    modalNext.classList.add('modal_next');
+    modalNext.setAttribute('aria-label', 'suivant');
+    const modalNextImg = document.createElement('img');
+    modalNextImg.src = 'assets/icons/next.svg';
+    modalNextImg.alt = 'next';
+    modalNext.appendChild(modalNextImg);
+    modal.appendChild(modalNext);
+
+    const closeButton = document.createElement('a');
+    closeButton.classList.add('modal_close');
+    closeButton.setAttribute('aria-label', 'fermer');
+    const closeImg = document.createElement('img');
+    closeImg.src = 'assets/icons/close_modal.svg';
+    closeImg.alt = 'close';
+    closeButton.appendChild(closeImg);
+    modal.appendChild(closeButton);
+
+
+    function createMediaElement(index) {
+        let mediaElement;
+        let mediaSource = "assets/photographers/" + photographer.name.split(' ')[0] + "/";
+        if (mediaPhotographer[index].video) {
+            mediaElement = document.createElement('video');
+            mediaSource += mediaPhotographer[index].video;
+            mediaElement.setAttribute('controls', '');
+            mediaElement.classList.add('modal_video');
+            mediaElement.src = mediaSource; // Utilisez la propriété 'src' pour les éléments 'video'
+        } else {
+            mediaElement = document.createElement('object');
+            mediaSource += mediaPhotographer[index].image;
+            mediaElement.data = mediaSource; // Utilisez la propriété 'data' pour les éléments 'object'
+        }
+        ObjectModal.replaceWith(mediaElement);
+        ObjectModal = mediaElement;
+    }
+
+
+    function addEventListenersToGalleryItems() {
+        const mediaElements = document.querySelectorAll('.media_card');
+        mediaElements.forEach((mediaElement, index) => {
+            const mediaImgOrVideo = mediaElement.querySelector('.media_img') || mediaElement.querySelector('.media_video');
+            mediaImgOrVideo.addEventListener('click', () => {
+                modal.style.display = 'flex';
+                currentIndex = index; // Mettez à jour l’index ici
+                createMediaElement(currentIndex);
+                modalTitle.textContent = mediaPhotographer[currentIndex].title;
+            });
+        });
+    }
+
+    modalPrev.addEventListener('click', () => {
+        currentIndex = currentIndex === 0 ? mediaPhotographer.length - 1 : currentIndex - 1;
+        if (currentIndex >= 0 && currentIndex < mediaPhotographer.length) {
+            createMediaElement(currentIndex);
+            modalTitle.textContent = mediaPhotographer[currentIndex].title;
+        }
+    });
+
+
+    modalNext.addEventListener('click', () => {
+        currentIndex = currentIndex === mediaPhotographer.length - 1 ? 0 : currentIndex + 1;
+        if (currentIndex >= 0 && currentIndex < mediaPhotographer.length) {
+            createMediaElement(currentIndex);
+            modalTitle.textContent = mediaPhotographer[currentIndex].title;
+        }
+    });
+
+    window.addEventListener('keydown', (e) => {
+        if (e.key === 'Escape' || e.key === ' ') {
+            modal.style.display = 'none';
+        } else if (e.key === 'ArrowLeft') {
+            modalPrev.click();
+        } else if (e.key === 'ArrowRight') {
+            modalNext.click();
+        }
+    });
+
+
+    closeButton.addEventListener('click', () => {
+        modal.style.display = 'none';
+    });
+
+    //little box with likes and price per day on the bottom right of the page
+    const likes = document.querySelector('.likes');
+    const price = document.querySelector('.price_jour');
+    let totalLikes = mediaPhotographer.reduce((total, media) => total + media["likes"], 0);
+    let total = photographer.price;
+    likes.textContent = totalLikes;
+    price.textContent = total;
+    //console.log(totalLikes);
+    //console.log(total);
 
 });

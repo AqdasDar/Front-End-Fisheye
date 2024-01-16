@@ -6,10 +6,10 @@ function photographerTemplate(data) {
     function getUserCardDOM() {
         const a = document.createElement('a');
         a.setAttribute("href", `photographer.html?id=${id}`);
-        const article = document.createElement( 'article' );
-        const img = document.createElement( 'img' );
+        const article = document.createElement('article');
+        const img = document.createElement('img');
         img.setAttribute("src", picture)
-        const h2 = document.createElement( 'h2' );
+        const h2 = document.createElement('h2');
         h2.textContent = name;
         article.appendChild(img);
         article.appendChild(h2);
@@ -31,5 +31,6 @@ function photographerTemplate(data) {
 
 
     }
-    return { name, picture, getUserCardDOM }
+
+    return {name, picture, getUserCardDOM}
 }

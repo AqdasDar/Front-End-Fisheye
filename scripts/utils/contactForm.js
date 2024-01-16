@@ -1,6 +1,6 @@
 function displayModal() {
     const modal = document.getElementById("contact_modal");
-	modal.style.display = "block";
+    modal.style.display = "block";
 }
 
 function closeModal() {
@@ -28,7 +28,6 @@ const firstName = document.getElementById("first_name");
 const lastName = document.getElementById("last_name");
 const email = document.getElementById("email");
 const message = document.getElementById("message");
-const button = document.getElementById("submit_button");
 
 //console.log(form);
 
