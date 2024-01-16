@@ -20,4 +20,4 @@ async function init() {
     await displayData(photographers);
 }
 
-init().then(() => console.log("Photographers loaded"));
+init().then(() => console.log(""));

@@ -21,12 +21,15 @@
     <div class="tri">
         <label for="sort">Trier par</label>
         <div aria-label="trier par" class="sort_button" id="sort" role="listbox">
-                <span class="option">Popularité<img alt="arrow" aria-label="flèche"
-                                                    src="assets/icons/arrow.svg"/></span>
+                <span aria-label="Trier par popularité" class="option">Popularité
+                    <img alt="arrow" aria-label="flèche" src="assets/icons/arrow.svg"/>
+                </span>
             <div class="options">
-                <button aria-selected="true" name="popularite" role="option">Popularité</button>
-                <button name="date" role="option">Date</button>
-                <button name="titre" role="option">Titre</button>
+                <button aria-label="Trier par popularité" aria-selected="true" name="popularite" role="option">
+                    Popularité
+                </button>
+                <button aria-label="Trier par date" name="date" role="option">Date</button>
+                <button aria-label="Trier par titre" name="titre" role="option">Titre</button>
             </div>
         </div>
     </div>
@@ -69,7 +72,7 @@
         </form>
     </div>
 </div>
-<script src="/scripts/pages/photographer.js"></script>
-<script src="/scripts/utils/contactForm.js"></script>
+<script src="./scripts/pages/photographer.js"></script>
+<script src="./scripts/utils/contactForm.js"></script>
 </body>
 </html>

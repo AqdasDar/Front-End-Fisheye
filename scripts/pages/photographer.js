@@ -61,6 +61,7 @@ getPhotographers().then((data) => {
     let img = document.createElement('div');
     img.style.backgroundImage = `url(assets/photographers/Photographers_ID_Photos/${photographer.portrait})`;
     img.classList.add('photographer_img');
+    img.setAttribute('alt', photographer.name);
     photographerPhoto.appendChild(img);
     photographersSection.appendChild(photographerPhoto);
 
@@ -148,8 +149,11 @@ getPhotographers().then((data) => {
                 const mediaCard = document.createElement('div');
                 mediaCard.classList.add('media_card');
                 mediaCard.classList.add('modal_button');
+                mediaCard.setAttribute('aria-label', mediaPhotographer.title);
+                mediaCard.setAttribute('tabindex', '0');
                 let mediaImg = document.createElement('img');
                 mediaImg.classList.add('media_img');
+                mediaImg.setAttribute('alt', mediaPhotographer.title);
                 const mediaHeader = document.createElement('div');
                 mediaHeader.classList.add('media_header');
                 const mediaTitle = document.createElement('h2');
@@ -325,7 +329,10 @@ getPhotographers().then((data) => {
     });
 
     window.addEventListener('keydown', (e) => {
-        if (e.key === 'Escape' || e.key === ' ') {
+        if (e.key === 'Escape') {
+            modal.style.display = 'none';
+        } else if (e.key === ' ') {
+            e.preventDefault(); // Ajoutez cette ligne
             modal.style.display = 'none';
         } else if (e.key === 'ArrowLeft') {
             modalPrev.click();

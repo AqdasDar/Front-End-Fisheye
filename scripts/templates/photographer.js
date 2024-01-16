@@ -7,8 +7,10 @@ function photographerTemplate(data) {
         const a = document.createElement('a');
         a.setAttribute("href", `photographer.html?id=${id}`);
         const article = document.createElement('article');
+        article.setAttribute('aria-label', name);
         const img = document.createElement('img');
         img.setAttribute("src", picture)
+        img.setAttribute("alt", name)
         const h2 = document.createElement('h2');
         h2.textContent = name;
         article.appendChild(img);
