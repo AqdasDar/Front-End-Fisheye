@@ -42,7 +42,7 @@ getPhotographers().then((data) => {
     let title = document.createElement('h1');
     title.textContent = photographer.name;
     title.classList.add('photographer_name');
-    let city = document.createElement('p');
+    let city = document.createElement('h2');
     city.textContent = photographer.city + ', ' + photographer.country;
     city.classList.add('photographer_location');
     let tagline = document.createElement('p');
@@ -135,7 +135,7 @@ getPhotographers().then((data) => {
 
             // Update the text and SVG in the span
             sortButton.querySelector('span').innerHTML = this.textContent + '<img src="../assets/icons/arrow.svg"' +
-                ' alt="arrow" aria-label="flèche"/>';
+                ' alt="flèche" aria-label="flèche"/>';
         });
         buttons.forEach(button => {
             button.style.borderTop = "1px solid white";
