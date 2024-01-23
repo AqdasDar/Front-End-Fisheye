@@ -1,12 +1,42 @@
 function displayModal() {
     const modal = document.getElementById("contact_modal");
     modal.style.display = "block";
+
+    const allFocusableElements = modal.querySelectorAll('button, [href], input, select, textarea, [tabindex]:not([tabindex="-1"])');
+    const firstFocusableElement = allFocusableElements[0];
+    const lastFocusableElement = allFocusableElements[allFocusableElements.length - 1];
+    const KEYCODE_TAB = 9;
+
+    modal.addEventListener('keydown', function (e) {
+            let isTabPressed = (e.key === 'Tab' || e.keyCode === KEYCODE_TAB);
+            if (!isTabPressed) {
+                return;
+            }
+            if (e.shiftKey) /* shift + tab */ {
+                if (document.activeElement === firstFocusableElement) {
+                    lastFocusableElement.focus();
+                    e.preventDefault();
+                }
+            } else /* tab */ {
+                if (document.activeElement === lastFocusableElement) {
+                    firstFocusableElement.focus();
+                    e.preventDefault();
+                }
+            }
+        }
+    );
+    modal.style.zIndex = "1";
+    firstFocusableElement.focus();
 }
+
 
 function closeModal() {
     const modal = document.getElementById("contact_modal");
     modal.style.display = "none";
+    modal.style.zIndex = "-1";
+
 }
+
 
 let modalTitleName = document.getElementById("photographer_name");
 //gestion du formulaire

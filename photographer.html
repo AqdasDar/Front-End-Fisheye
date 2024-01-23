@@ -46,31 +46,29 @@
         </div>
     </div>
 </main>
-<div id="contact_modal">
-    <div class="modal">
-        <header class="modal_header">
-            <h2>Contactez-moi</h2>
-            <img alt="close modal" aria-label="fermer la fenêtre de contact" onclick="closeModal()"
-                 src="assets/icons/close.svg" tabindex="0"/>
-            <h2 id="photographer_name"></h2>
-        </header>
-        <form action="" id="contact_form" method="post">
-            <div>
-                <!-- erreur -->
-                <div id="error_message"></div>
-                <label for="first_name">Prénom</label>
-                <input aria-label="prénom" id="first_name" name="first_name" type="text"/>
-                <label for="last_name">Nom</label>
-                <input aria-label="nom" id="last_name" name="last_name" type="text"/>
-                <label for="email">Email</label>
-                <input aria-label="email" id="email" name="email" type="email"/>
-                <label for="message">Votre message</label>
-                <textarea aria-label="message" id="message" name="message"></textarea>
+<div class="modal" id="contact_modal">
+    <header class="modal_header">
+        <h2>Contactez-moi</h2>
+        <img alt="close modal" aria-label="fermer la fenêtre de contact" onclick="closeModal()"
+             src="assets/icons/close.svg" tabindex="0"/>
+        <h2 id="photographer_name"></h2>
+    </header>
+    <form action="" id="contact_form" method="post">
+        <div>
+            <!-- erreur -->
+            <div id="error_message"></div>
+            <label for="first_name">Prénom</label>
+            <input aria-label="prénom" id="first_name" name="first_name" type="text"/>
+            <label for="last_name">Nom</label>
+            <input aria-label="nom" id="last_name" name="last_name" type="text"/>
+            <label for="email">Email</label>
+            <input aria-label="email" id="email" name="email" type="email"/>
+            <label for="message">Votre message</label>
+            <textarea aria-label="message" id="message" name="message"></textarea>
 
-            </div>
-            <button aria-label="contactez-moi" class="contact_button" id="submit_button">Envoyer</button>
-        </form>
-    </div>
+        </div>
+        <button aria-label="contactez-moi" class="contact_button" id="submit_button">Envoyer</button>
+    </form>
 </div>
 <script src="scripts/pages/photographer.js"></script>
 <script src="scripts/utils/contactForm.js"></script>

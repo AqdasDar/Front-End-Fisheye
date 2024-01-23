@@ -308,18 +308,28 @@ getPhotographers().then((data) => {
             mediaElement.classList.add('modal_video');
             mediaElement.src = mediaSource; // Utilisez la propriété 'src' pour les éléments 'video'
         } else {
-            mediaElement = document.createElement('object');
+            mediaElement = document.createElement('img');
             mediaSource += mediaPhotographer[index].image;
-            mediaElement.data = mediaSource; // Utilisez la propriété 'data' pour les éléments 'object'
+            mediaElement.classList.add('modal_img');
+            mediaElement.src = mediaSource; // Utilisez la propriété 'data' pour les éléments 'object'
         }
         ObjectModal.replaceWith(mediaElement);
         ObjectModal = mediaElement;
+        ObjectModal.tabIndex = -1;
     }
 
 
     function addEventListenersToGalleryItems() {
         const mediaElements = document.querySelectorAll('.media_card');
         mediaElements.forEach((mediaElement, index) => {
+            mediaElement.addEventListener('keydown', (e) => {
+                if (e.key === 'Enter') {
+                    modal.style.display = 'flex';
+                    currentIndex = index; // Mettez à jour l’index ici
+                    createMediaElement(currentIndex);
+                    modalTitle.textContent = mediaPhotographer[currentIndex].title;
+                }
+            });
             const mediaImgOrVideo = mediaElement.querySelector('.media_img') || mediaElement.querySelector('.media_video');
             mediaImgOrVideo.addEventListener('click', () => {
                 modal.style.display = 'flex';
@@ -349,22 +359,29 @@ getPhotographers().then((data) => {
 
     ObjectModal.addEventListener('mousedown', function (event) {
         event.preventDefault();
+        document.body.focus();
     });
+
     document.addEventListener('keydown', (e) => {
+        if (document.activeElement === ObjectModal) {
+            if ([' ', 'ArrowLeft', 'ArrowRight'].includes(e.key)) {
+                e.preventDefault();
+            }
+        }
+
         if (e.key === 'Escape') {
             modal.style.display = 'none';
         } else if (e.key === ' ') {
-            e.preventDefault(); // Ajoutez cette ligne
+            e.preventDefault();
             modal.style.display = 'none';
         } else if (e.key === 'ArrowLeft') {
-            modalPrev.click();
             console.log('left');
+            modalPrev.click();
         } else if (e.key === 'ArrowRight') {
             modalNext.click();
             console.log('right');
         }
     });
-
 
     closeButton.addEventListener('click', () => {
         modal.style.display = 'none';

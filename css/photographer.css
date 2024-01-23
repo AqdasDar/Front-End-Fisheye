@@ -313,7 +313,7 @@ form input {
     background-color: white;
 }
 
-object {
+.modal_img {
     width: 100%;
     height: 100%;
     object-fit: cover;
