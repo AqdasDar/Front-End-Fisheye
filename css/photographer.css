@@ -7,6 +7,13 @@ a {
     display: none;
 }
 
+.header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    height: 90px;
+    margin: 0 100px;
+}
 
 .photograph-header {
     background-color: #FAFAFA;
@@ -309,7 +316,7 @@ form input {
 object {
     width: 100%;
     height: 100%;
-    object-fit: fill;
+    object-fit: cover;
 }
 
 .modal_video {
@@ -320,8 +327,15 @@ object {
 
 .object_container {
     width: 1050px;
-    height: 700px;
+    height: 900px;
     border-radius: 5px;
+}
+
+@media only screen and (max-height: 900px) {
+    .object_container {
+        width: 800px;
+        height: 700px;
+    }
 }
 
 .object_div {

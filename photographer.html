@@ -8,21 +8,21 @@
     <title>Fisheye - photographe </title>
 </head>
 <body>
-<header>
+<div class="header">
     <a aria-label="Retour à la page d’accueil" href="index.html">
-        <img alt="fisheye logo" aria-label="fisheye logo" class="logo" src="assets/images/logo.png"/>
+        <img alt="Fisheye Home page" aria-label="fisheye logo" class="logo" src="assets/images/logo.png"/>
     </a>
-</header>
+</div>
 <main id="main">
     <div class="photograph-header">
         <button aria-label="contactez-moi" class="contact_button" onclick="displayModal()">Contactez-moi</button>
     </div>
     <!-- tri pour photos -->
     <div class="tri">
-        <label for="sort">Trier par</label>
-        <div aria-label="trier par" class="sort_button" id="sort" role="listbox">
+        <span>Trier par</span>
+        <div aria-label="trier par" class="sort_button" id="sort" role="listbox" tabindex="0">
                 <span aria-label="Trier par popularité" class="option">Popularité
-                    <img alt="arrow" aria-label="flèche" src="assets/icons/arrow.svg"/>
+                    <img alt="flèche" aria-label="flèche" src="assets/icons/arrow.svg"/>
                 </span>
             <div class="options">
                 <button aria-label="Trier par popularité" aria-selected="true" name="popularite" role="option">
@@ -38,7 +38,7 @@
     <div class="price_like">
         <div class="likes_div">
             <span aria-label="total de likes" class="likes"></span>
-            <img alt="likes" aria-label="likes" src="assets/icons/blackheart.svg"/>
+            <img alt="likes/Coeur" aria-label="likes" src="assets/icons/blackheart.svg"/>
         </div>
         <div class="price_div">
             <span aria-label="Prix par jour" class="price_jour"></span>
@@ -51,7 +51,7 @@
         <header class="modal_header">
             <h2>Contactez-moi</h2>
             <img alt="close modal" aria-label="fermer la fenêtre de contact" onclick="closeModal()"
-                 src="assets/icons/close.svg"/>
+                 src="assets/icons/close.svg" tabindex="0"/>
             <h2 id="photographer_name"></h2>
         </header>
         <form action="" id="contact_form" method="post">

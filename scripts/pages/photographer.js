@@ -39,6 +39,8 @@ getPhotographers().then((data) => {
     // console.log(photographer);
     const photographerProfile = document.createElement('div');
     photographerProfile.classList.add('photographer_profile');
+    let header = document.createElement('header');
+    header.classList.add('photographer_header');
     let title = document.createElement('h1');
     title.textContent = photographer.name;
     title.classList.add('photographer_name');
@@ -48,7 +50,8 @@ getPhotographers().then((data) => {
     let tagline = document.createElement('p');
     tagline.textContent = photographer.tagline;
     tagline.classList.add('photographer_tagline');
-    photographerProfile.appendChild(title);
+    photographerProfile.appendChild(header);
+    header.appendChild(title);
     photographerProfile.appendChild(city);
     photographerProfile.appendChild(tagline);
     photographersSection.appendChild(photographerProfile);
@@ -143,6 +146,21 @@ getPhotographers().then((data) => {
     });
 
     function updateMediaGallery(sortedMedia) {
+
+        //little box with likes and price per day on the bottom right of the page
+        const likes = document.querySelector('.likes');
+        const price = document.querySelector('.price_jour');
+        let totalLikes = mediaPhotographer.reduce((total, media) => total + media["likes"], 0);
+        let total = photographer.price;
+        likes.textContent = totalLikes;
+        price.textContent = total;
+        //console.log(totalLikes);
+        //console.log(total);
+
+        function totalLike() {
+            likes.textContent = mediaPhotographer.reduce((total, media) => total + media["likes"], 0);
+        }
+
         mediaGallery.innerHTML = '';
         sortedMedia.forEach((mediaPhotographer) => {
                 mediaGallery.classList.add('media_gallery');
@@ -171,10 +189,12 @@ getPhotographers().then((data) => {
                         mediaPhotographer.liked = true;
                         mediaPhotographer["likes"]++;
                         mediaLikes.textContent = mediaPhotographer["likes"];
+                        totalLike();
                     } else {
                         mediaPhotographer.liked = false;
                         mediaPhotographer["likes"]--;
                         mediaLikes.textContent = mediaPhotographer["likes"];
+                        totalLike();
                     }
                 });
                 const mediaHeartImg = document.createElement('img');
@@ -248,10 +268,9 @@ getPhotographers().then((data) => {
     ObjectDiv.appendChild(ObjectContainer);
     let ObjectModal = document.createElement('object');
     ObjectContainer.appendChild(ObjectModal);
-
-
     const modalTitle = document.createElement('h2');
     modalTitle.classList.add('modal_title');
+    modalTitle.textContent = "empty"
     ObjectDiv.appendChild(modalTitle);
 
 
@@ -328,7 +347,10 @@ getPhotographers().then((data) => {
         }
     });
 
-    window.addEventListener('keydown', (e) => {
+    ObjectModal.addEventListener('mousedown', function (event) {
+        event.preventDefault();
+    });
+    document.addEventListener('keydown', (e) => {
         if (e.key === 'Escape') {
             modal.style.display = 'none';
         } else if (e.key === ' ') {
@@ -336,8 +358,10 @@ getPhotographers().then((data) => {
             modal.style.display = 'none';
         } else if (e.key === 'ArrowLeft') {
             modalPrev.click();
+            console.log('left');
         } else if (e.key === 'ArrowRight') {
             modalNext.click();
+            console.log('right');
         }
     });
 
@@ -346,14 +370,5 @@ getPhotographers().then((data) => {
         modal.style.display = 'none';
     });
 
-    //little box with likes and price per day on the bottom right of the page
-    const likes = document.querySelector('.likes');
-    const price = document.querySelector('.price_jour');
-    let totalLikes = mediaPhotographer.reduce((total, media) => total + media["likes"], 0);
-    let total = photographer.price;
-    likes.textContent = totalLikes;
-    price.textContent = total;
-    //console.log(totalLikes);
-    //console.log(total);
 
 });
