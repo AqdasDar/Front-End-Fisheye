@@ -72,6 +72,35 @@ getPhotographers().then((data) => {
     const sortButton = document.querySelector('.sort_button');
     const options = document.querySelector('.sort_button .options');
 
+
+    sortButton.addEventListener('keydown', function (e) {
+        if (e.key === 'Enter') {
+            options.style.display = options.style.display === 'none' ? 'block' : 'none';
+            let allFocusableElements = options.querySelectorAll('button');
+            let firstFocusableElement = allFocusableElements[0];
+            let lastFocusableElement = allFocusableElements[allFocusableElements.length - 1];
+
+
+            options.addEventListener('keydown', function (e) {
+                    if (e.key === 'Enter') {
+                        this.click();
+                        //  console.log('enter');
+                    } else if (e.shiftKey) /* shift + tab */ {
+                        if (document.activeElement === firstFocusableElement) {
+                            lastFocusableElement.focus();
+                        }
+                    } else /* tab */ {
+                        if (document.activeElement === lastFocusableElement) {
+                            firstFocusableElement.focus();
+
+                        }
+                    }
+                }
+            );
+        }
+    });
+
+
     sortButton.addEventListener('click', function () {
         options.style.display = options.style.display === 'none' ? 'block' : 'none';
         if (options.style.display === 'block') {
@@ -81,11 +110,10 @@ getPhotographers().then((data) => {
             this.style.borderBottomLeftRadius = '';
             this.style.borderBottomRightRadius = '';
         }
-
-
     });
 
     const buttons = document.querySelectorAll('.sort_button .options button');
+
 
     // sort by popularity
     // Trier par popularité (nombre de likes)
@@ -109,7 +137,6 @@ getPhotographers().then((data) => {
     buttons.forEach(button => {
         button.addEventListener('click', function () {
             let sortFunction;
-
             if (this.name === 'date') {
                 sortFunction = sortByDate;
             } else if (this.name === 'titre') {
@@ -375,11 +402,11 @@ getPhotographers().then((data) => {
             e.preventDefault();
             modal.style.display = 'none';
         } else if (e.key === 'ArrowLeft') {
-            console.log('left');
+            // console.log('left');
             modalPrev.click();
         } else if (e.key === 'ArrowRight') {
             modalNext.click();
-            console.log('right');
+            // console.log('right');
         }
     });
 

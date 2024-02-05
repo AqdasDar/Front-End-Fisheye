@@ -133,11 +133,12 @@ a {
 }
 
 .media_likes {
-    color: #000;
-    font-family: Roboto, sans-serif;
-    font-size: 16px;
+    color: #901C1C;
+    text-align: right;
+    font-family: "DM Sans", sans-serif;
+    font-size: 24px;
     font-style: normal;
-    font-weight: 400;
+    font-weight: 500;
     line-height: normal;
 }
 
@@ -258,6 +259,7 @@ form input {
 .sort_button .options button[aria-selected="true"] {
     display: none;
 }
+
 
 .tri {
     margin: 10px 100px;
