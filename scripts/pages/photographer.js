@@ -172,8 +172,7 @@ getPhotographers().then((data) => {
             this.style.display = 'none';
 
             // Update the text and SVG in the span
-            sortButton.querySelector('span').innerHTML = this.textContent + '<img' +
-                ' src="../Front-End-Fisheye/assets/icons/arrow.svg"' +
+            sortButton.querySelector('span').innerHTML = this.textContent + '<img src="assets/icons/arrowUp.svg"' +
                 ' alt="flèche" aria-label="flèche"/>';
         });
         buttons.forEach(button => {
