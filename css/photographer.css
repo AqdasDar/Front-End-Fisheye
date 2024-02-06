@@ -121,7 +121,7 @@ a {
     flex-direction: row;
     justify-content: space-between;
     align-items: center;
-    width: 100%;
+    width: 350px;
 }
 
 .media_likes_container {
@@ -145,6 +145,14 @@ a {
 .media_hearts {
     width: 21px;
     height: 24px;
+}
+
+.heart-transition {
+    transition: opacity 0.5s ease-in-out;
+}
+
+.hidden {
+    opacity: 0;
 }
 
 .modal header {
@@ -431,4 +439,10 @@ form input {
     font-style: normal;
     font-weight: 500;
     line-height: normal;
+}
+
+.photographer_gallery {
+    display: grid;
+    grid-gap: 95px;
+    margin: 30px 100px;
 }

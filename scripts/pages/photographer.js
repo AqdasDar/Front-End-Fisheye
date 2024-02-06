@@ -16,9 +16,9 @@ getPhotographers().then((data) => {
     // on récupère l'id du photographe dans l'url
 //console.log(id);
     const media = data.media;
-    // la propriété media contient les médias des photographes
+    // la propriété média contient les médias des photographes
 //console.log(media);
-    const mediaSection = document.querySelector(".photographer_section");
+    const mediaSection = document.querySelector(".photographer_gallery");
     const mediaGallery = document.createElement('div');
     const mediaPhotographer = media.filter((media) => media["photographerId"] === id);
     // filter permet de récupérer les médias du photographe en fonction de son id
@@ -221,11 +221,13 @@ getPhotographers().then((data) => {
 
                 mediaHeart.addEventListener('click', () => {
                     if (!mediaPhotographer.liked) {
+                        mediaHeart.querySelector('img').src = 'assets/icons/heart.svg';
                         mediaPhotographer.liked = true;
                         mediaPhotographer["likes"]++;
                         mediaLikes.textContent = mediaPhotographer["likes"];
                         totalLike();
                     } else {
+                        mediaHeart.querySelector('img').src = 'assets/icons/emptyHeart.svg';
                         mediaPhotographer.liked = false;
                         mediaPhotographer["likes"]--;
                         mediaLikes.textContent = mediaPhotographer["likes"];
@@ -234,7 +236,7 @@ getPhotographers().then((data) => {
                 });
                 const mediaHeartImg = document.createElement('img');
 
-                mediaHeartImg.src = 'assets/icons/heart.svg';
+                mediaHeartImg.src = 'assets/icons/emptyHeart.svg';
                 mediaHeartImg.alt = 'likes';
                 mediaHeart.appendChild(mediaHeartImg);
                 mediaHeart.setAttribute('aria-label', 'likes');
