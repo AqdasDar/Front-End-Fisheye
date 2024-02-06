@@ -1,22 +1,27 @@
+//cette fonction permet de récupérer les données des photographes
 async function getPhotographers() {
+    // Récupère les données du fichier JSON situé à "./data/photographers.json".
     const response = await fetch("./data/photographers.json");
     return await response.json();
 }
 
-
+//cette fonction permet de récupérer les données des photographes
 getPhotographers().then((data) => {
     const photographersSection = document.querySelector(".photograph-header");
 
     const button = document.querySelector(".contact_button");
-
     let params = new URL(document.location).searchParams;
-    let id = Number(params.get("id")); // Convert the id to a number
+    // searchParams permet de récupérer les paramètres de l'URL avec la méthode get
+    let id = Number(params.get("id"));
+    // on récupère l'id du photographe dans l'url
 //console.log(id);
     const media = data.media;
+    // la propriété media contient les médias des photographes
 //console.log(media);
     const mediaSection = document.querySelector(".photographer_section");
     const mediaGallery = document.createElement('div');
     const mediaPhotographer = media.filter((media) => media["photographerId"] === id);
+    // filter permet de récupérer les médias du photographe en fonction de son id
 
 //console.log(data);
 
@@ -36,6 +41,7 @@ getPhotographers().then((data) => {
 
 
     const photographer = photographers.find((photographer) => photographer.id === id) || defaultPhotographer;
+    //find permet de récupérer le photographe en fonction de son id
     // console.log(photographer);
     const photographerProfile = document.createElement('div');
     photographerProfile.classList.add('photographer_profile');
@@ -72,15 +78,17 @@ getPhotographers().then((data) => {
     const sortButton = document.querySelector('.sort_button');
     const options = document.querySelector('.sort_button .options');
 
-
+// écouteur d'événement pour le bouton de tri des médias
     sortButton.addEventListener('keydown', function (e) {
         if (e.key === 'Enter') {
             options.style.display = options.style.display === 'none' ? 'block' : 'none';
+            // si le menu est caché, le montrer, sinon le cacher
             let allFocusableElements = options.querySelectorAll('button');
             let firstFocusableElement = allFocusableElements[0];
             let lastFocusableElement = allFocusableElements[allFocusableElements.length - 1];
 
 
+// Ajout d'un écouteur d'événement pour gérer la navigation au clavier dans le menu
             options.addEventListener('keydown', function (e) {
                     if (e.key === 'Enter') {
                         this.click();
@@ -100,7 +108,7 @@ getPhotographers().then((data) => {
         }
     });
 
-
+// écouteur d'événement pour le bouton de tri des médias
     sortButton.addEventListener('click', function () {
         options.style.display = options.style.display === 'none' ? 'block' : 'none';
         if (options.style.display === 'block') {
@@ -399,8 +407,10 @@ getPhotographers().then((data) => {
         if (e.key === 'Escape') {
             modal.style.display = 'none';
         } else if (e.key === ' ') {
-            e.preventDefault();
-            modal.style.display = 'none';
+            if (modal.style.display === 'flex') {
+                e.preventDefault();
+                modal.style.display = 'none';
+            }
         } else if (e.key === 'ArrowLeft') {
             // console.log('left');
             modalPrev.click();
